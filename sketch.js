@@ -2,7 +2,7 @@ var ship;
 var lasers = [];
 
 //function to create the space for our game
-//also creates the ship and asteroids.
+//also creates the ship and will initialize asteroids (TODO).
 function setup() {
     createCanvas(windowWidth, windowHeight);
     ship = new Ship();
