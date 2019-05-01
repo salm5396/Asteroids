@@ -11,13 +11,27 @@ function setup() {
 function draw() {
     background(0);
 
-    //big loop for lasers and asteroids hitting or going off screen
+    //big loop for lasers going off screen
     for (var i = lasers.length - 1; i >= 0; i--) {
         lasers[i].render();
         lasers[i].update();
         if (lasers[i].offscreen()) {
             lasers.splice(i, 1);
         } 
+    }
+
+    //the stuff for moving spaceship or shooting lasers
+    if (keyIsDown(32)) { // spacebar
+        lasers.push(new Laser(ship.pos, ship.heading));
+    }
+    if (keyIsDown(39)) { //right arrow
+        ship.setRotation(0.1);
+    }
+    if (keyIsDown(37)) { //up arrow
+        ship.setRotation(-0.1);
+    }
+    if (keyIsDown(38)) { //left arrow
+        ship.boosting(true);
     }
 
     //updates everything needed with the ship
@@ -33,16 +47,4 @@ function draw() {
 function keyReleased() {
     ship.setRotation(0);
     ship.boosting(false);
-}
-//determines what key is pressed and what to do with the ship
-function keyPressed() {
-    if (keyCode == 32) { // spacebar
-        lasers.push(new Laser(ship.pos, ship.heading));
-    } else if (keyCode == 39) { //right arrow
-        ship.setRotation(0.1);
-    } else if (keyCode == 37) { //up arrow
-        ship.setRotation(-0.1);
-    } else if (keyCode == 38) { //left arrow
-        ship.boosting(true);
-    }
 }
