@@ -21,17 +21,14 @@ function draw() {
     }
 
     //the stuff for moving spaceship or shooting lasers
-    if (keyIsDown(32)) { // spacebar
-        lasers.push(new Laser(ship.pos, ship.heading));
+    if (keyIsDown(38)) { //up arrow
+        ship.thrusting(true);
+    }
+    if (keyIsDown(37)) { //left arrow
+        ship.setRotation(-0.1);
     }
     if (keyIsDown(39)) { //right arrow
         ship.setRotation(0.1);
-    }
-    if (keyIsDown(37)) { //up arrow
-        ship.setRotation(-0.1);
-    }
-    if (keyIsDown(38)) { //left arrow
-        ship.boosting(true);
     }
 
     //updates everything needed with the ship
@@ -46,5 +43,11 @@ function draw() {
 //when the specified key is released, stop doing that thing
 function keyReleased() {
     ship.setRotation(0);
-    ship.boosting(false);
+    ship.thrusting(false);
+}
+
+function keyPressed() {
+    if (key == " ") { // spacebar
+        lasers.push(new Laser(ship.pos, ship.heading));
+    }
 }
