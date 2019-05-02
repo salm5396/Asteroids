@@ -4,24 +4,33 @@ function Ship() {
     this.heading = 0;
     this.rotation = 0;
     this.vel = createVector(0, 0);
-    this.isBoosting = false;
+    this.isThrusting = false;
 
-    this.boosting = function (b) {
-        this.isBoosting = b;
+    this.thrusting = function (b) {
+        this.isThrusting = b;
     }
 
     this.update = function () {
-        if (this.isBoosting) {
-            this.boost();
+        if (this.isThrusting) {
+            this.thrust();
         }
         this.pos.add(this.vel);
         this.vel.mult(0.99);
     }
 
-    this.boost = function () {
+    this.thrust = function () {
         var force = p5.Vector.fromAngle(this.heading);
         force.mult(0.1);
         this.vel.add(force);
+    }
+
+    this.hits = function (asteroid) {
+        var d = dist(this.pos.x, this.pos.y, asteroid.pos.x, asteroid.pos.y);
+        if (d < this.r + asteroid.r) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     this.render = function () {
