@@ -3,7 +3,7 @@ var asteroids = [];
 var lasers = [];
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth/1.25, windowHeight/1.25);
     ship = new Ship();
     for (var i = 0; i < 5; i++) {
         asteroids.push(new Asteroid());
@@ -12,7 +12,7 @@ function setup() {
 
 function draw() {
     background(0);
-
+    document.getElementById("score").innerHTML = score;
     for (var i = 0; i < asteroids.length; i++) {
         if (ship.hits(asteroids[i])) {
             console.log('crash!');
@@ -39,6 +39,7 @@ function draw() {
             for (var j = asteroids.length - 1; j >= 0; j--)
             {
                 if (lasers[i].hits(asteroids[j])) {
+                    score = score + 15;
                     //if the size of the asteroid is over 20, then break it in two
                     if (asteroids[j].r > 20)
                     {
