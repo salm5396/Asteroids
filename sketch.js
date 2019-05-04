@@ -1,7 +1,10 @@
-var ship;
 var asteroids = [];
 var lasers = [];
+var level = 1;
+var lives = 3;
 var score = 0;
+var ship;
+var shipCollision = false;
 
 function setup() {
     createCanvas(windowWidth/1.25, windowHeight/1.25);
@@ -14,6 +17,14 @@ function setup() {
 function draw() {
     background(0);
     document.getElementById("score").innerHTML = score;
+    
+    if(asteroids.length == 0){
+        level = level+1;
+        for (var i = 0; i < 5+level; i++) {
+            asteroids.push(new Asteroid());
+        }    
+    }
+    
     for (var i = 0; i < asteroids.length; i++) {
         if (ship.hits(asteroids[i])) {
             console.log('crash!');
