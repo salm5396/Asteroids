@@ -1,6 +1,7 @@
 var ship;
 var asteroids = [];
 var lasers = [];
+var score = 0;
 
 function setup() {
     createCanvas(windowWidth/1.25, windowHeight/1.25);
