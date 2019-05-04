@@ -8,6 +8,17 @@
 	<script language="javascript" type="text/javascript" src="laser.js"></script>
 	<script language="javascript" type="text/javascript" src="asteroids.js"></script>
 	<style>
+		li{
+			display: inline;
+		}
+		#livesString{
+			list-style-type: none;
+			overflow: none;
+			position: absolute;
+			top: 10px;
+			left: 280px;
+			font-size: 32px;
+		}
 		#score{
 			position: absolute;
 			top: 10px;
@@ -24,6 +35,10 @@
 </head>
 
 <body>
+	<ul id=livesString>
+		<li>Lives: </li>
+		<li id = lives></li>
+	</ul>
 	<p id = "score"></p>
 </body>
 </html>
