@@ -1,13 +1,12 @@
+var ship;
 var asteroids = [];
 var lasers = [];
-var level = 1;
-var lives = 3;
-var score = 0;
-var ship;
 var canPlay = true;
-
+var score = 0;
+var lives = 3;
+var level = 1;
 function setup() {
-    createCanvas(windowWidth/1.25, windowHeight/1.25);
+    createCanvas(windowWidth/1.5, windowHeight/1.25);
     ship = new Ship();
     for (var i = 0; i < 5; i++) {
         asteroids.push(new Asteroid());
@@ -17,15 +16,15 @@ function setup() {
 function draw() {
     background(0);
     document.getElementById("score").innerHTML = score;
-    
-    if(asteroids.length == 0){
-        level = level+1;
-        for (var i = 0; i < 5+level; i++) {
+
+    if (asteroids.length == 0) {
+        level = level + 1;
+        for (var i = 0; i < 5 + level; i++) {
             asteroids.push(new Asteroid());
-        }    
+        }
     }
-    
-     for (var i = 0; i < asteroids.length; i++) {
+
+    for (var i = 0; i < asteroids.length; i++) {
         if (ship.hits(asteroids[i]) && canPlay) {
             canPlay = false;
             ship.destroy();
@@ -91,7 +90,7 @@ function draw() {
     ship.edges();
 }
 
-//stops thrusting if the up button is released
+//stops boosting if the up button is released
 function keyReleased() {
     ship.setRotation(0);
     ship.thrusting(false);
