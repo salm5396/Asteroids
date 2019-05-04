@@ -11,6 +11,7 @@ function setup() {
     for (var i = 0; i < 5; i++) {
         asteroids.push(new Asteroid());
     }
+    loop();
 }
 
 function draw() {
@@ -88,6 +89,10 @@ function draw() {
     ship.turn();
     ship.update();
     ship.edges();
+
+    if (!canPlay &&lives==0) {
+        noLoop();
+    }
 }
 
 //stops boosting if the up button is released
@@ -100,4 +105,17 @@ function keyPressed() {
         if (key == ' ') {
             lasers.push(new Laser(ship.pos, ship.heading));
         }
+}
+
+
+function restartGame() {
+    ship = new Ship();
+    asteroids = [];
+    lasers = [];
+    canPlay = true;
+    score = 0;
+    lives = 3;
+    level = 1;
+    setup();
+    
 }
