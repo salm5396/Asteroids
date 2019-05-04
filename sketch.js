@@ -25,9 +25,17 @@ function draw() {
         }    
     }
     
-    for (var i = 0; i < asteroids.length; i++) {
-        if (ship.hits(asteroids[i])) {
-            console.log('crash!');
+     for (var i = 0; i < asteroids.length; i++) {
+        if (ship.hits(asteroids[i]) && canPlay) {
+            canPlay = false;
+            ship.destroy();
+            setTimeout(function () {
+                lives--;
+                if (lives > 0) {
+                    ship = new Ship();
+                    canPlay = true;
+                }
+            }, 3000);
         }
         asteroids[i].render();
         asteroids[i].update();
@@ -51,7 +59,8 @@ function draw() {
             for (var j = asteroids.length - 1; j >= 0; j--)
             {
                 if (lasers[i].hits(asteroids[j])) {
-                    score = score + 15;
+                    score += 15;
+
                     //if the size of the asteroid is over 20, then break it in two
                     if (asteroids[j].r > 20)
                     {
@@ -65,12 +74,6 @@ function draw() {
             }
         }
     }
-    ship.render();
-    ship.turn();
-    ship.update();
-    ship.edges();
-
-
     //stuff so that continuous pressing of buttons is okay
     if (keyIsDown(RIGHT_ARROW)) {
         ship.setRotation(0.1);
@@ -81,6 +84,11 @@ function draw() {
     if (keyIsDown(UP_ARROW)) {
         ship.thrusting(true);
     }
+
+    ship.render();
+    ship.turn();
+    ship.update();
+    ship.edges();
 }
 
 //stops thrusting if the up button is released
