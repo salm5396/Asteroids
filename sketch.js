@@ -4,7 +4,7 @@ var level = 1;
 var lives = 3;
 var score = 0;
 var ship;
-var shipCollision = false;
+var canPlay = true;
 
 function setup() {
     createCanvas(windowWidth/1.25, windowHeight/1.25);
