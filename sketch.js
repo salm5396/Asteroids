@@ -7,8 +7,8 @@ var lives = 3;
 var level = 1;
 
 function setup() {
-   var myCanvas = createCanvas(windowWidth/1.5, windowHeight/1.25);
-    myCanvas.parent("gameCanvas");
+    var mycanvas = createCanvas(windowWidth / 1.5, windowHeight / 1.25);
+    mycanvas.parent("gameCanvas");
     ship = new Ship();
     for (var i = 0; i < 5; i++) {
         asteroids.push(new Asteroid());
@@ -95,6 +95,7 @@ function draw() {
 
     if (!canPlay &&lives==0) {
         noLoop();
+        gameOver();
     }
 }
 
@@ -121,4 +122,16 @@ function restartGame() {
     level = 1;
     setup();
     
+}
+
+function gameOver() {
+    alert("Game Over!");
+}
+
+
+function hideLogin() {
+    document.getElementById("container").style.display = "block";
+
+    document.getElementById("loginForm").style.display = "none";
+    restartGame();
 }
