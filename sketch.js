@@ -5,6 +5,7 @@ var canPlay = true;
 var score = 0;
 var lives = 3;
 var level = 1;
+
 function setup() {
     createCanvas(windowWidth/1.5, windowHeight/1.25);
     ship = new Ship();
@@ -17,6 +18,7 @@ function setup() {
 function draw() {
     background(0);
     document.getElementById("score").innerHTML = score;
+    document.getElementById("lives").innerHTML = lives;
 
     if (asteroids.length == 0) {
         level = level + 1;
