@@ -7,7 +7,8 @@ var lives = 3;
 var level = 1;
 
 function setup() {
-    createCanvas(windowWidth/1.5, windowHeight/1.25);
+   var myCanvas = createCanvas(windowWidth/1.5, windowHeight/1.25);
+    myCanvas.parent("gameCanvas");
     ship = new Ship();
     for (var i = 0; i < 5; i++) {
         asteroids.push(new Asteroid());
