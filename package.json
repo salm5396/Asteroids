@@ -1,0 +1,20 @@
+{
+    "name": "dynamic_server",
+    "version": "1.0.0",
+    "description": "CISC 375 Dynamic Server Application",
+    "author": "Thomas Marrinan <tmarrinan@stthomas.edu>",
+    "contributors": [
+        "Thomas Marrinan <tmarrinan@stthomas.edu>"
+    ],
+    "repository": "https://github.com/tmarrinan/dynamic_server.git",
+    "main": "server.js",
+    "dependencies": {
+        "express": "^4.16.4",
+        "sqlite3": "^4.0.6",
+        "ws": "^7.0.0"
+    },
+    "engines": {
+        "node": ">= 10.0.0",
+        "npm": ">= 6.0.0"
+    }
+}
