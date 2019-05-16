@@ -8,6 +8,31 @@
 	<script language="javascript" type="text/javascript" src="laser.js"></script>
 	<script language="javascript" type="text/javascript" src="asteroids.js"></script>
 	<style>
+		ul{
+  		list-style-type: none;
+  		margin: 0;
+  		padding: 0;
+  		overflow: hidden;
+  		background-color: #30302f;
+		position:top;
+		}
+		li a{
+	 		display: block;
+	 		font-size: 1.5em;
+	 		color: #ffffff;
+	 		padding: 14px 16px;
+	 		text-decoration: none;
+	 	}
+		li{
+	 		display: inline;
+	 		float: left;
+	 	}
+		li a.active{
+			background-color: #ff3333;
+		}
+		li a:hover:not(.active){
+	 		background-color: #ffb3b3;
+		}
 		li{
 			display: inline;
 		}
@@ -119,7 +144,12 @@
 		<p>Password: <input id="pass" type="text" placeholder = "Enter Password"/></p>
 		<button id="login" type="button">Login</button>
 	</div>
-	
+	<div id="navigation">
+		<ul id = pages>
+			<li><a class="active" href= "index.html">Home</a></li>
+			<li><a href="about.html">About</a></li>
+		</ul>
+	</div>	
 	<div id="container" style="display:none;">
 		<ul id=livesString>
 			<li>Lives: </li>
