@@ -358,4 +358,43 @@ function Ship() {
     }
 
 }
+/*function getLeaderboard(){
+	$.ajax({
+		url: '/leaderboard',
+		type: 'get',
+		dataType: 'json',
+	}).don(fillBoard(data));
 
+
+
+
+}*/
+
+
+function getLeaderboard() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("leaderboard").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "/leaderboard", true);
+  xhttp.send();
+}
+
+function fillBoard(serverData){
+	console.log(JSON.parse(serverData));
+	var board = document.getElementById("leaderboard");
+	board.innerHTML = "";//enmptys table of previous data
+	var htmlStr = "";
+	var current;
+	var user = "";
+	var header = "<td><b>User</b></td><td><b>High Score</b></td>";
+	var headrow = table.insertRow(0);
+	    headrow.innerHTML = header;
+
+	for(var i = 0; i < serverData.usernames.length; i++){
+		user = serverData.username;
+		
+	}
+}
