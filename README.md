@@ -1,2 +1,0 @@
-# Asteroids
-JavaScript Asteroids game
