@@ -1,17 +1,24 @@
 {
-    "name": "dynamic_server",
+    "name": "Asteroids",
     "version": "1.0.0",
-    "description": "CISC 375 Dynamic Server Application",
-    "author": "Thomas Marrinan <tmarrinan@stthomas.edu>",
+    "description": "CISC 375 Web Game",
+    "author": "Zack & Vinh",
     "contributors": [
-        "Thomas Marrinan <tmarrinan@stthomas.edu>"
+        "Zack ",
+	"Vinh "
     ],
-    "repository": "https://github.com/tmarrinan/dynamic_server.git",
+    "repository": "https://github.com/salm5396/Asteroids.git",
     "main": "server.js",
     "dependencies": {
+        "MD5": "^1.3.0",
         "express": "^4.16.4",
+        "express-session": "^1.16.1",
+        "md5": "^2.2.1",
         "sqlite3": "^4.0.6",
-        "ws": "^7.0.0"
+        "ws": "^7.0.0",
+	"body-parser": "^1.19.0",
+	"path": "0.12.7",
+	"url": "0.11.0"
     },
     "engines": {
         "node": ">= 10.0.0",
