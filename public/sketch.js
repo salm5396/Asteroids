@@ -5,7 +5,7 @@ var canPlay = true;
 var score = 0;
 var lives = 3;
 var level = 1;
-
+var secondVersion = false;
 function setup() {
     var mycanvas = createCanvas(windowWidth / 1.5, windowHeight / 1.25);
     mycanvas.parent("gameCanvas");
@@ -22,7 +22,12 @@ function draw() {
     document.getElementById("lives").innerHTML = lives;
 
     if (asteroids.length == 0) {
-        level = level + 1;
+        if (secondVersion) {
+            level *= 2;
+        }
+        else {
+            level = level + 1;
+        }
         for (var i = 0; i < 5 + level; i++) {
             asteroids.push(new Asteroid());
         }
@@ -88,6 +93,10 @@ function draw() {
         ship.thrusting(true);
     }
 
+    if(keyIsDown(32)&&secondVersion){
+    	lasers.push(new Laser(ship.pos, ship.heading));
+    }
+
     ship.render();
     ship.turn();
     ship.update();
@@ -118,6 +127,7 @@ function restartGame() {
     asteroids = [];
     lasers = [];
     canPlay = true;
+    secondVersion = false;
     score = 0;
     lives = 3;
     level = 1;
@@ -129,18 +139,9 @@ function gameOver() {
     
     alert("Game Over!");
 }
-
-
-function hideLogin() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("container").style.display = "block";
-    restartGame();
-}
-
-function checkLogin(){
-	var username = document.getElementById("username").name;
-	var password = document.getElementById("pass").name;
-	hideLogin();
+function changeVersion() {
+    secondVersion = true;
+    alert("Hard Mode Activated! Double the Asteroids each round");
 }
 
 
@@ -358,24 +359,31 @@ function Ship() {
     }
 
 }
-/*function getLeaderboard(){
-	$.ajax({
-		url: '/leaderboard',
-		type: 'get',
-		dataType: 'json',
-	}).don(fillBoard(data));
 
+function getIcon(){
+  var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if(this.readyState == 4 && this.status == 200){
+			fillIcon(this.responseText);
+		}
+	};
+	xhttp.open("GET", "/icon",true);
+	xhttp.send();
+}
 
-
-
-}*/
-
+function fillIcon(data){
+	var icon = JSON.parse(data).picture;
+	var area = document.getElementById("icon");
+	area.innerHTML = "";
+	var tag = "<img style='width:30%;height:30%;' src=" + icon + ">";
+	area.innerHTML = tag;
+}
 
 function getLeaderboard() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("leaderboard").innerHTML = this.responseText;
+      fillBoard(this.responseText);
     }
   };
   xhttp.open("GET", "/leaderboard", true);
@@ -384,17 +392,21 @@ function getLeaderboard() {
 
 function fillBoard(serverData){
 	console.log(JSON.parse(serverData));
+	var data = JSON.parse(serverData);
 	var board = document.getElementById("leaderboard");
 	board.innerHTML = "";//enmptys table of previous data
 	var htmlStr = "";
 	var current;
 	var user = "";
-	var header = "<td><b>User</b></td><td><b>High Score</b></td>";
-	var headrow = table.insertRow(0);
-	    headrow.innerHTML = header;
-
-	for(var i = 0; i < serverData.usernames.length; i++){
-		user = serverData.username;
-		
+	var highscore;
+	var played = 0;	
+	for(var i = 0; i < data.length; i++){
+		user = data[i].username;
+		highscore = data[i].highscore;
+		played = data[i].played;
+		var newRow = board.insertRow(-1);
+		htmlStr="<td>" + user + "</td><td>" + highscore + "</td><td>" + played +"</td>";
+		newRow.innerHTML =htmlStr;
+		newRow.style.backgroundColor = "white";
 	}
 }
