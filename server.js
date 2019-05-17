@@ -5,11 +5,8 @@ var sqlite3 = require('sqlite3');
 var multiparty = require('multiparty');
 var app = express();
 var port = 8004;
-var fs = require('fs');
 var db_filename = path.join(__dirname, 'db', 'userdata.sqlite3');
 var public_dir = path.join(__dirname, 'public');
-var mime = require('mime-types');
-
 
 var db = new sqlite3.Database(db_filename, (err) => {
     if (err) {
@@ -20,14 +17,30 @@ var db = new sqlite3.Database(db_filename, (err) => {
     }
 });
 
-app.use(express.static(public_dir));
+//app.use(express.static(public_dir));
+//app.use(express.static(__dirname+"/public/libraries"));
 
-app.get('/login',(req,res)=>{
-	var req_url = url.parse(req.url,true);
-	urlData = req_url.query;
-	console.log(req_url);
-	var name = JSON.stringify(urlData.uname);
-	var pass = JSON.stringify(urlData.pwd);
+app.get('/',(req,res)=>{
+	res.sendFile(__dirname+"/public/log.html");
+});
+
+
+app.post(public_dir+'/login',(req,res)=>{
+	var name;
+	var pw;
+	var form = new multiparty.Form();
+	form.parse(req, (err,fields,files)=>{
+                console.log(fields);
+                if(err){
+                        console.log(err);
+                }
+		else{
+			name = JSON.stringify(fields.uname[0]);
+			pw = JSON.stringify(fields.pwd[0]);
+		}
+
+	});
+	console.log(name + " " + pw);
 	db.get('SELECT password FROM data WHERE username = ?',[name], (err, row) =>{
 		if(err){
 			console.log(err);
@@ -43,47 +56,16 @@ app.get('/login',(req,res)=>{
 			}
 		}
 	});
-	res.end();
+	res.sendFile("/public/index.html");
 });
 
-
-app.post('/highscore',(req,res)=>{
-	var name,highscore;
-	var form = new multiparty.Form();
-	 
-        form.parse(req, (err,fields,files)=>{
-                console.log(fields);
-                if(err){
-                        console.log(err);
-                }
-                else{
-                        name = JSON.stringify(fields.uname[0]);
-                        db.get("SELECT username FROM data WHERE username = ? AND username.highscore < ?",[name,highscore],(err,row)=>{
-                                if(!err){
-                                	console.log("Error getting user data");
-				}
-                                else{
-                                }
-                        });
-                        if(exists===true){
-                                console.log("Username already exists");
-                        }
-
-          res.sendFile(public_dir);
-
-          res.end();
-
-                }
-        });
-
-});
 
 app.post('/register',(req,res)=>{
 	var name;
 	var pass;
 	var highscore = 0;
 	var form = new multiparty.Form();
-
+	console.log(req);
 
 	form.parse(req, (err,fields,files)=>{
 		console.log(fields);
@@ -116,9 +98,6 @@ app.post('/register',(req,res)=>{
                 		console.log("Username already exists");
         		}
 
-	  res.sendFile(public_dir);
-	  
-          res.end();
 
 		}
 	});
