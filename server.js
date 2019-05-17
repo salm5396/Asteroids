@@ -2,7 +2,6 @@ var path = require('path');
 var url = require('url');
 var express = require('express');
 var sqlite3 = require('sqlite3');
-var multiparty = require('multiparty');
 var app = express();
 var port = 8004;
 var db_filename = path.join(__dirname, 'db', 'userdata.sqlite3');
@@ -17,38 +16,25 @@ var db = new sqlite3.Database(db_filename, (err) => {
     }
 });
 
-//app.use(express.static(public_dir));
-//app.use(express.static(__dirname+"/public/libraries"));
+app.use(express.static(public_dir));
+//app.use(bodyParser.json());
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
 
-app.get('/',(req,res)=>{
-	res.sendFile(__dirname+"/public/log.html");
-});
-
-
-app.post(public_dir+'/login',(req,res)=>{
-	var name;
-	var pw;
-	var form = new multiparty.Form();
-	form.parse(req, (err,fields,files)=>{
-                console.log(fields);
-                if(err){
-                        console.log(err);
-                }
-		else{
-			name = JSON.stringify(fields.uname[0]);
-			pw = JSON.stringify(fields.pwd[0]);
-		}
-
-	});
+app.post('/login',(req,res)=>{
+	console.log(req);
+	var name = req.body.uname;
+	var pw = req.body.pass;
 	console.log(name + " " + pw);
-	db.get('SELECT password FROM data WHERE username = ?',[name], (err, row) =>{
+	db.get('SELECT password FROM data WHERE username = ?',[name], (err, rows) =>{
 		if(err){
 			console.log(err);
 			res.end();
 	 	}
 		else{
-			console.log(pass + " " + row.password);
-			if(pass.localeCompare(row.password) == 0){
+			console.log(rows);
+			console.log(pw + " " + rows.password);
+			if(pw.localeCompare(rows.password) == 0){
 			   console.log("Passwords are equal");
 			}
 			else{
@@ -56,7 +42,7 @@ app.post(public_dir+'/login',(req,res)=>{
 			}
 		}
 	});
-	res.sendFile("/public/index.html");
+	res.sendFile(__dirname + "/public/game.html");
 });
 
 
@@ -64,18 +50,11 @@ app.post('/register',(req,res)=>{
 	var name;
 	var pass;
 	var highscore = 0;
-	var form = new multiparty.Form();
-	console.log(req);
 
-	form.parse(req, (err,fields,files)=>{
-		console.log(fields);
-		if(err){
-			console.log(err);
-		}
-		else{
-			name = JSON.stringify(fields.uname[0]);
-			pass = JSON.stringify(fields.pwd[0]);
-               		var exists = false;
+
+	name = JSON.stringify(fields.uname[0]);
+	pass = JSON.stringify(fields.pwd[0]);
+            		var exists = false;
        			db.get("SELECT username FROM data WHERE username = ?",[name],(err,row)=>{
 				if(!err){
                         		console.log("No User");
@@ -97,12 +76,6 @@ app.post('/register',(req,res)=>{
         		if(exists===true){
                 		console.log("Username already exists");
         		}
-
-
-		}
-	});
 });
 
 var server = app.listen(port);
-
-
