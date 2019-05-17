@@ -20,9 +20,14 @@ app.use(express.static(public_dir));
 //app.use(bodyParser.json());
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
+var session = require('express-session');
+app.use(session({
+	secret:'keyboard cat',
+	resave: false,
+	saveUninitialized: true
+}));
 
 app.post('/login',(req,res)=>{
-	console.log(req);
 	var name = req.body.uname;
 	var pw = req.body.pass;
 	console.log(name + " " + pw);
@@ -36,6 +41,9 @@ app.post('/login',(req,res)=>{
 			console.log(pw + " " + rows.password);
 			if(pw.localeCompare(rows.password) == 0){
 			   console.log("Passwords are equal");
+				req.session.name = name;
+				console.log(req.session.name);
+				req.session.save();
 			}
 			else{
 				console.log("Not Equal");
@@ -46,6 +54,13 @@ app.post('/login',(req,res)=>{
 });
 
 
+app.post('/highscore',(req,res)=>{
+	console.log(req.session.name);
+	console.log(req.body.score);
+});
+
+
+//MD5 when register
 app.post('/register',(req,res)=>{
 	var name;
 	var pass;
@@ -79,3 +94,5 @@ app.post('/register',(req,res)=>{
 });
 
 var server = app.listen(port);
+
+
