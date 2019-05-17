@@ -20,6 +20,33 @@
 			border: 3px solid #f1f1f1;
 		}
 
+			ul{
+		  		list-style-type: none;
+		  		margin: 0;
+		  		padding: 0;
+		  		overflow: hidden;
+		  		background-color: #30302f;
+				position:top;
+			}
+			li a{
+		 		display: block;
+		 		font-size: 1.5em;
+		 		color: #ffffff;
+		 		padding: 14px 16px;
+		 		text-decoration: none;
+		 	}
+			li{
+		 		display: inline;
+		 		float: left;
+		 	}
+		 	li a.active{
+		 		background-color: #ff3333;
+		 	}
+		 	li a:hover:not(.active){
+		 		background-color: #ffb3b3;
+		 	}
+
+
 		/* Full-width inputs */
 		input[type=text], input[type=password] {
 			width: 100%;
@@ -94,6 +121,12 @@
 </head>
 
 <body>
+	<div id="navigation">
+		<ul id = pages>
+			<li><a href= "index.html">Home</a></li>
+			<li><a class="active" href="about.html">About</a></li>
+		</ul>
+	</div>
 	<form action ="/login" method="post">
 		<p>Username: <input name="uname" type="text" placeholder = "Enter Username"/></p>
 		<p>Password: <input name="pass" type="text" placeholder = "Enter Password"/></p>
@@ -102,7 +135,24 @@
 	<form action ="/register" method="post">
                 <p>Username: <input name="uname" type="text" placeholder = "Enter Username"/></p>
                 <p>Password: <input name="pass" type="text" placeholder = "Enter Password"/></p>
-                <button type="submit">Register</button>
+                <select name = "avatars">
+			<option value="images/bear.jpg" alt="bear">bear</option>
+			<option value="images/bee.jpg" alt="bee">bee</option>
+			<option value="images/buddha.jpg" alt="buddha">buddha</option>
+			<option value="images/butterfly.jpg" alt="butterfly">butterfly</option>
+			<option value="images/cat.jpg" alt="cat">cat</option>
+			<option value="images/chicken.jpg" alt="chicken">chicken</option>
+			<option value="images/dog.jpg" alt="dog">dog</option>
+			<option value="images/egg.jpg" alt="egg">egg</option>
+			<option value="images/fish.jpg" alt="fish">fish</option>
+			<option value="images/lion.jpg" alt="lion">lion</option>
+			<option value="images/monkey.jpg" alt="monkey">monkey</option>
+			<option value="images/owl.jpg" alt="owl">owl</option>
+			<option value="images/panda.jpg" alt="panda">panda</option>
+			<option value="images/seal.jpg" alt="seal">seal</option>
+			<option value="images/shrimp.jpg" alt="shrimp">shrimp</option>
+		</select>	
+		<button type="submit">Register</button>
         </form>
 
 		<div class="imgcontainer">
