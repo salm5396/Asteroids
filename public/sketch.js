@@ -18,7 +18,7 @@ function setup() {
 
 function draw() {
     background(0);
-    document.getElementById("score").innerHTML = score;
+    document.getElementById("score").value = score;
     document.getElementById("lives").innerHTML = lives;
 
     if (asteroids.length == 0) {
@@ -96,6 +96,7 @@ function draw() {
     if (!canPlay &&lives==0) {
         noLoop();
         gameOver();
+	document.getElementById("currscore").submit();
     }
 }
 
@@ -125,6 +126,7 @@ function restartGame() {
 }
 
 function gameOver() {
+    
     alert("Game Over!");
 }
 
