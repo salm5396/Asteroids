@@ -109,14 +109,15 @@
 		}
 	</style>
 </head>
-
 <body>
 	<div id="container">
 		<ul id=livesString>
 			<li>Lives: </li>
 			<li id=lives></li>
 		</ul>
-		<p id="score"></p>
+		<form name="getHighScore" id="currscore" action="/highscore" method="post">
+		<input id="score" name="score" style="border:none;" value="0" /><br/>
+		</form>
 		<div id="gameCanvas">
 		</div>
 		<button style="background-color: #0026ff; color: white;" onclick="restartGame()"> restart </button>
