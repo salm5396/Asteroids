@@ -34,8 +34,7 @@ app.post('/login',(req,res)=>{
 	console.log(name + " " + pw);
 	db.get('SELECT password FROM data WHERE username = ?',[name], (err, rows) =>{
 		if(err){
-			console.log(err);
-			res.end();
+			res.sendFile(_dirname + "/public/index.html");
 	 	}
 		else{
 			console.log(rows);
@@ -62,16 +61,23 @@ app.post('/highscore',(req,res)=>{
 	var name = req.session.name;
 	var played = req.session.played;
 	var sql = 'UPDATE data SET highscore = ? WHERE username = ? AND highscore < ?';
-	var sql2 = 'UPDATE data SET played = ? WHERE username = ?';
 	db.run(sql,[score,name,score], (err, rows) =>{
                 if(err){
                         console.log(err);
-                        res.end();
                 }
                 else{
-			res.sendFile(__dirname + "/public/game.html");
+			console.log("Successfully updated");
                 }
         });
+	db.run("UPDATE stats SET played = ?,highscore=? WHERE username = ? AND highscore < ?",[played+1,score,name,score],(err,row)=>{
+		if(err){
+			console.log(err);
+		}
+		else{
+			console.log("Updated stats table");
+			res.sendFile(__dirname + "/public/game.html");
+		}
+	});
 
 });
 
@@ -81,6 +87,8 @@ app.post('/register',(req,res)=>{
 	var highscore = 0;
 	var name = req.body.uname;
         var pw = md5(req.body.pass);
+	var pic = req.body.avatars;
+	console.log(req.body.avatars); 
         var played = 0;
 	console.log(name + " " + pw);
          	var exists = false;
@@ -91,7 +99,7 @@ app.post('/register',(req,res)=>{
 				req.session.save();
                        		req.session.played = played;
 				req.session.save();
-				db.run("INSERT INTO data(username,password,highscore) VALUES(?,?,?)",[name,pw,0],(err,row)=>{
+				db.run("INSERT INTO data(username,password,highscore,picture) VALUES(?,?,?,?)",[name,pw,0,pic],(err,row)=>{
                                		if(err){
                                        		console.log(err);
                                		}
@@ -111,15 +119,10 @@ app.post('/register',(req,res)=>{
                		}
                		else{
                       		console.log("User exists");
-                       		exists = true;
+				res.sendFile(__dirname + "/public/index.html");
                		}
      		});
-        	if(exists===true){
-                	console.log("Username already exists");
-        	}
 });
-
-
 app.get('/leaderboard',(req,res)=>{
 	 var score = req.body.score;
          var name = req.session.name;
@@ -133,6 +136,19 @@ app.get('/leaderboard',(req,res)=>{
 	});
 });
 
+app.get('/icon',(req,res)=>{
+	var name = req.session.name;
+	db.get("SELECT picture From data WHERE username = ?",[name],(err,row)=>{
+		if(err){
+			console.log(err);
+		}
+		res.send(row);
+	});
+
+});
+
 
 
 var server = app.listen(port);
+
+
