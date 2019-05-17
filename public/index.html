@@ -59,8 +59,8 @@
 		}
 
 		/* Avatar image */
-		img.avatar {
-			width: 40%;
+		#avatar {
+			width: 50px;
 			border-radius: 50%;
 		}
 
@@ -86,6 +86,9 @@
 				width: 100%;
 			}
 		}
+		img.selected{
+  			box-shadow:0px 12px 22px 1px #333;
+		}
 	</style>
 </head>
 
@@ -94,7 +97,25 @@
 		<p>Username: <input name="uname" type="text" placeholder = "Enter Username"/></p>
 		<p>Password: <input name="pass" type="text" placeholder = "Enter Password"/></p>
 		<button type="submit">Login</button>
-	</form>	
+	</form>
+		<div class="imgcontainer">
+			<h1>Choose an avatar</h1>
+			<input type="image" id="avatar" src="images/bear.jpg" alt="bear">
+			<input type="image" id="avatar" src="images/bee.jpg" alt="bee">
+			<input type="image" id="avatar" src="images/buddha.jpg" alt="buddha">
+			<input type="image" id="avatar" src="images/butterfly.jpg" alt="butterfly">
+			<input type="image" id="avatar" src="images/cat.jpg" alt="cat">
+			<input type="image" id="avatar" src="images/chicken.jpg" alt="chicken">
+			<input type="image" id="avatar" src="images/dog.jpg" alt="dog">
+			<input type="image" id="avatar" src="images/egg.jpg" alt="egg">
+			<input type="image" id="avatar" src="images/fish.jpg" alt="fish">
+			<input type="image" id="avatar" src="images/lion.jpg" alt="lion">
+			<input type="image" id="avatar" src="images/monkey.jpg" alt="monkey">
+			<input type="image" id="avatar" src="images/owl.jpg" alt="owl">
+			<input type="image" id="avatar" src="images/panda.jpg" alt="panda">
+			<input type="image" id="avatar" src="images/seal.jpg" alt="seal">
+			<input type="image" id="avatar" src="images/shrimp.jpg" alt="shrimp">
+		</div>
 </body>
 </html>
 
